@@ -1,0 +1,8 @@
+[x] init Project 
+[x] install package
+[x] config babel
+[x] create server
+[x] create route and controller
+[x] connect to database
+[x] config socketIO
+[] config multer
