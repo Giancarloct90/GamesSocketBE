@@ -5,4 +5,13 @@
 [x] create route and controller
 [x] connect to database
 [x] config socketIO
-[] config multer
+[x] config multer
+[x] create model games
+[x] ep get all Games
+[x] config cloudinary
+[x] endpoint insert Game
+[] validate data
+[] ep get one game by id
+[] endpoint delete Game
+[] endpoint update Game
+[] endpoint voted

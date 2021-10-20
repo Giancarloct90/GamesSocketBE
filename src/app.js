@@ -1,6 +1,8 @@
 import cors from "cors";
 import morgan from "morgan";
 import router from "./routes/games.routes";
+import path from 'path';
+import multer from 'multer';
 
 // CREATE SOCKET-IO SERVER
 import express from "express";
@@ -21,6 +23,17 @@ app.use(express.urlencoded({
     extended: false
 }));
 app.use(express.json());
+
+//MIDDELWARE 
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, '../public'),
+    filename: (req, file, fnCallback) => {
+        fnCallback(null, `${new Date().getTime() + path.extname(file.originalname)}`)
+    }
+})
+app.use(multer({
+    storage
+}).single('image'));
 
 // ROUTES
 app.use('/API', router);
