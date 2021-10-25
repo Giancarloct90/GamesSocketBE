@@ -41,8 +41,8 @@ export const getAllGames = async (req, res) => {
 // ENDPOINT INSERT GAME
 export const insertGame = async (req, res) => {
     // console.log(req.body, req.file);
-    console.log(req.body.nombre);
-    console.log(req.file.filename);
+    // console.log(req.body.nombre);
+    // console.log(req.file.filename);
     try {
         let imageUp = await uploadImage(req.file.path);
         if (!imageUp.ok) {
@@ -64,7 +64,7 @@ export const insertGame = async (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            message: 'Success'
+            message: 'Saved Success'
         });
     } catch (e) {
         console.log('Error ED INSERT GAME: ', e);
@@ -74,4 +74,18 @@ export const insertGame = async (req, res) => {
         });
     }
 
+}
+
+// ENDPOINT DELETE GAME
+export const deleteGame = async (req, res) => {
+    let id = req.body.id;
+    let game = new Game();
+    let gameDb = await Game.findByIdAndUpdate(id, {
+        disponible: false
+    });
+    console.log(gameDb);
+    res.status(200).json({
+        ok: true,
+        message: 'ok man'
+    })
 }

@@ -1,10 +1,11 @@
 import cloudinary from 'cloudinary';
 import fs from 'fs-extra';
+import config from '../../config';
 
 cloudinary.config({
-    cloud_name: 'ddnzwfrmo',
-    api_key: '751465344374982',
-    api_secret: 'MNMtnqvFuL4XBiRu5LLXPtxygEA'
+    cloud_name: config.CLOUD_NAME,
+    api_key: config.API_KEY,
+    api_secret: config.API_SECRET
 });
 
 export const uploadImage = async (image) => {
@@ -18,7 +19,8 @@ export const uploadImage = async (image) => {
     } catch (e) {
         console.log('Error Trying to upload img');
         return {
-            ok: false
+            ok: false,
+            message: 'Error trying to upoad image'
         };
     }
 }

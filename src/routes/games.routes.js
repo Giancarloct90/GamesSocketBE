@@ -4,7 +4,8 @@ import {
 import {
     welcome,
     getAllGames,
-    insertGame
+    insertGame,
+    deleteGame
 } from '../controllers/games.ctrler';
 
 const router = Router();
@@ -15,5 +16,7 @@ router.get('/', welcome);
 router.get('/games', getAllGames);
 // EP INSERT GAME
 router.post('/games', insertGame);
+// EP DELETE GAME
+router.put('/games', deleteGame);
 
 export default router;
