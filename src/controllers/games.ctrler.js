@@ -41,10 +41,6 @@ export const getAllGames = async (req, res) => {
 
 // ENDPOINT INSERT GAME
 export const insertGame = async (req, res) => {
-    // console.log(req.body, req.file);
-    // console.log(req.body.nombre);
-    // console.log(req.file.filename);
-    // console.log(req.body.flag);
 
     if (!req.file) {
         let message = ['La imagen no puede estar vacia'];
@@ -104,7 +100,7 @@ export const deleteGame = async (req, res) => {
     })
 }
 
-// TO GET A GAME
+// ENDPOINT TO GET A GAME
 export const getOneGame = async (req, res) => {
     let id = req.params.id;
     try {
@@ -131,26 +127,60 @@ export const getOneGame = async (req, res) => {
 
 // TO UPDATE A GAME
 export const updateGame = async (req, res) => {
-    console.log('hello');
+    // console.log('hello');
     let {
         id,
         nombre
     } = req.body;
+    let imagenUpdate;
+
 
     try {
+        // FIND A GAME
         let gameDB = await Game.findById(id);
         if (!gameDB) {
+            console.log('not found')
             return res.status(500).json({
                 ok: false,
                 message: 'Error Server'
             });
         }
         console.log(gameDB);
-    } catch (e) {
-        console.log(e);
-        return res.status(400).json({
-            e
+        // return res.status(200).json({
+        //     ok: true
+        // })
+        // IF GAMES EXIST AND SEND A FILE
+        if (req.file) {
+            let imageUp = await uploadImage(req.file.path);
+            imagenUpdate = imageUp.imageUpload.url;
+        } else {
+            imagenUpdate = gameDB.imagen;
+        }
+        let gamesUpdatedDB = await Game.findByIdAndUpdate(gameDB._id, {
+            nombre: nombre || gameDB.nombre,
+            imagen: imagenUpdate
+        });
+
+        if (!gamesUpdatedDB) {
+            return res.status(200).json({
+                ok: false,
+                message: 'Error updating'
+            });
+        }
+        console.log(gamesUpdatedDB);
+        res.status(200).json({
+            ok: true,
+            message: 'updated success',
+            gamesUpdatedDB
         })
+        // console.log(gameDB);
+    } catch (e) {
+        console.log('catch');
+        return res.status(400).json({
+            ok: false,
+            message: 'El usuario no existe',
+            e
+        });
     }
 
 

@@ -25,7 +25,8 @@
     "nodemon": "^2.0.13"
   },
   "scripts": {
-    "dev": "nodemon src --exec babel-node"
+    "dev": "nodemon src --exec babel-node",
+    "build": "babel src -d dist"
   },
   "keywords": [],
   "author": "",
